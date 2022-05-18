@@ -91,7 +91,19 @@ export const constantRoutes = [
         path: 'index',
         component: () => import('@/views/address/index'),
         name: '地址管理',
-        meta: { title: '地址管理', icon: 'el-icon-location', affix: true }
+        meta: { title: '地址管理', icon: 'el-icon-location' }
+      }
+    ]
+  },
+  {
+    path: '/driver',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/driver/index'),
+        name: '司机管理',
+        meta: { title: '司机管理', icon: 'user' }
       }
     ]
   },
@@ -138,7 +150,7 @@ export const asyncRoutes = [
     meta: {
       title: 'Permission',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: [2, 0] // you can set roles in root nav
     },
     children: [
       {
@@ -147,7 +159,7 @@ export const asyncRoutes = [
         name: 'PagePermission',
         meta: {
           title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
+          roles: [2] // or you can only set roles in sub nav
         }
       },
       {
@@ -165,7 +177,7 @@ export const asyncRoutes = [
         name: 'RolePermission',
         meta: {
           title: 'Role Permission',
-          roles: ['admin']
+          roles: [2]
         }
       }
     ]

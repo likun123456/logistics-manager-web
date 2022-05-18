@@ -8,19 +8,26 @@
       </el-col>
     </el-row>
 
-    <el-table :data="tableData" border height="250" style="width: 100%">
-      <el-table-column prop="nickname" label="昵称">
+    <el-table :data="tableData" height="250" style="width: 100%">
+      <el-table-column prop="driver" label="司机" align="center">
+        <template #default>
+          <el-avatar
+            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+          ></el-avatar>
+        </template>
+      </el-table-column>
+      <el-table-column prop="nickname" label="昵称" align="center">
         <template #default="scope">
           <el-tag>{{ scope.row.nickname }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="province" label="省" />
+      <el-table-column prop="province" label="省" align="center" />
       <el-table-column prop="city" label="市" />
-      <el-table-column prop="street" label="街道" />
-      <el-table-column prop="detail" label="具体地址" />
-      <el-table-column prop="mobile" label="电话号码" />
+      <el-table-column prop="street" label="街道" align="center" />
+      <el-table-column prop="detail" label="具体地址" align="center" />
+      <el-table-column prop="mobile" label="电话号码" align="center" />
 
-      <el-table-column fixed="right" label="操作" width="180">
+      <el-table-column fixed="right" label="操作" width="180" align="center">
         <template #default="scope">
           <el-button
             type="primary"

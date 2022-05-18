@@ -57,8 +57,7 @@
           </span>
         </el-form-item>
       </el-tooltip>
-
-      <el-form-item prop="role">
+      <div style="left: 62%;position: relative;">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
@@ -75,7 +74,7 @@
           >
           </el-option>
         </el-select>
-      </el-form-item>
+      </div>
 
       <el-button
         :loading="loading"
@@ -89,32 +88,17 @@
 </template>
 
 <script>
-import { validUsername } from "@/utils/validate";
 import SocialSign from "./components/SocialSignin";
 
 export default {
   name: "Login",
   components: { SocialSign },
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error("Please enter the correct user name"));
-      } else {
-        callback();
-      }
-    };
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error("The password can not be less than 6 digits"));
-      } else {
-        callback();
-      }
-    };
     return {
       loginForm: {
         username: "",
         password: "",
-        role: "",
+        role: 0,
       },
       loginRules: {
         username: [{ required: true, trigger: "blur" }],
@@ -185,7 +169,7 @@ export default {
               this.loading = false;
             });
         } else {
-          this.$message.error("登录失败")
+          this.$message.error("登录失败");
           return false;
         }
       });

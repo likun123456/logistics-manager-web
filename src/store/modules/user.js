@@ -5,6 +5,7 @@ import router, { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
+  userId: '',
   avatar: '',
   introduction: '',
   roles: []
@@ -20,6 +21,9 @@ const mutations = {
   SET_NAME: (state, name) => {
     state.name = name
   },
+  SET_USER_ID: (state, userId) => {
+    state.userId = userId
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
@@ -31,12 +35,12 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username, password, role } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: password, role: role }).then(response => {
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data)
+        setToken(data)
         resolve()
       }).catch(error => {
         reject(error)
@@ -49,19 +53,17 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
         if (!data) {
-          reject('Verification failed, please Login again.')
+          reject('认证失败，请重新登录.')
         }
-
-        const { roles, name, avatar, introduction } = data
-
+        const { roles, name, avatar, introduction, id } = data
         // roles must be a non-empty array
         if (!roles || roles.length <= 0) {
-          reject('getInfo: roles must be a non-null array!')
+          reject('角色不能为空')
         }
 
         commit('SET_ROLES', roles)
+        commit('SET_USER_ID', id)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
         commit('SET_INTRODUCTION', introduction)
@@ -77,6 +79,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_USER_ID', '')
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
